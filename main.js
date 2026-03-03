@@ -182,6 +182,27 @@ document.querySelectorAll('.gallery-img').forEach(img => {
                 'images/closet_design_modal_1767931282928.png',
                 'images/syl_luxury_closet_4k_1767926338314.png'
             ];
+        } else if (img.alt.includes('Pantry') || img.src.includes('pantry')) {
+            images = [
+                'images/pantry_multi_1_1772580243334.png',
+                'images/pantry_multi_2_1772580256273.png',
+                'images/pantry_multi_3_1772580267982.png',
+                'images/pantry_multi_4_1772580284440.png'
+            ];
+        } else if (img.alt.includes('Office') || img.src.includes('office')) {
+            images = [
+                'images/office_multi_1_1772580481579.png',
+                'images/office_multi_2_1772580494832.png',
+                'images/office_multi_3_1772580505097.png',
+                'images/office_multi_4_1772580519614.png'
+            ];
+        } else if (img.alt.includes('Laundry') || img.src.includes('laundry')) {
+            images = [
+                'images/laundry_multi_1_1772580580944.png',
+                'images/laundry_multi_2_1772580593747.png',
+                'images/laundry_multi_3_1772580611860.png',
+                'images/laundry_multi_4_1772580628799.png'
+            ];
         }
 
         if (images.length > 1 && modalGallery) {
