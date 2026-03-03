@@ -1,0 +1,702 @@
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Great+Vibes&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+
+:root {
+  /* Color Palette */
+  --primary: #4392a6;
+  /* Matched from user image */
+  --secondary: #2c6e7d;
+  /* Darker shade of teal */
+  --bg-color: #f9f8f6;
+  --text-color: #1a1a1a;
+  --glass-bg: rgba(255, 255, 255, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --accent: #d4a373;
+  /* Subtle gold accent for a premium feel */
+
+  /* Typography */
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-logo: 'Playfair Display', serif;
+  --font-script: 'Great Vibes', cursive;
+  --font-sans: 'Inter', sans-serif;
+  /* Kept as fallback or specific use */
+
+  /* Spacing */
+  --section-padding: 12rem 2rem;
+  --container-max: 1200px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --section-padding: 6rem 1.5rem;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-serif);
+  background-color: transparent;
+  /* Changed to let canvas show through */
+  color: var(--text-color);
+  line-height: 1.6;
+  overflow-x: hidden;
+  font-size: 1.1rem;
+}
+
+/* 3D Canvas */
+#bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* 3D Tilt Utilities */
+.tilt-card {
+  transform-style: preserve-3d;
+  transform: perspective(1000px);
+  will-change: transform;
+}
+
+/* Base layer - Glass background */
+.tilt-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateZ(0px);
+  z-index: -1;
+}
+
+/* Push Images and Overlays Forward */
+.tilt-card .service-image,
+.tilt-card .owner-image-wrapper,
+.tilt-card .service-overlay {
+  transform: translateZ(40px);
+  transition: transform 0.5s ease;
+  transform-style: preserve-3d;
+}
+
+/* Push Text Further Forward */
+.tilt-card .service-overlay>*,
+.tilt-card .owner-info>* {
+  transform: translateZ(40px);
+  /* 40px relative to its 40px parent = 80px */
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+}
+
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Header & Navigation */
+/* Header & Navigation */
+header {
+  background-color: var(--primary);
+  /* Using global color as requested */
+  padding: 0 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  /* Removed sticky to allow scroll away */
+  z-index: 1000;
+  color: white;
+  height: 120px;
+}
+
+.logo-box {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-bottom: 0;
+  height: 100%;
+}
+
+.logo-box a {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 10px 0;
+}
+
+.logo-img {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.logo-img:hover {
+  transform: scale(1.02);
+  opacity: 0.9;
+}
+
+nav {
+  margin-bottom: 0;
+  /* Align with the text baseline */
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.1rem;
+  /* Slightly reduced */
+  text-transform: capitalize;
+  font-weight: 400;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  letter-spacing: 0.5px;
+  transition: opacity 0.3s;
+}
+
+nav a:hover {
+  opacity: 0.8;
+}
+
+.nav-icons {
+  display: flex;
+  gap: 1rem;
+  margin-left: 2rem;
+  font-size: 1.2rem;
+}
+
+/* Glassmorphism Utility */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+}
+
+.hero {
+  position: relative;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: transparent;
+  /* Remove old static background */
+}
+
+/* New CSS for slider */
+.hero-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 0;
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.45));
+  /* Slightly lighter top so 3D BG shows more */
+  z-index: 1;
+}
+
+/* Ensure content is above the overlay */
+.hero-content,
+.slider-dots {
+  z-index: 2;
+}
+
+.hero-content {
+  text-align: center;
+  z-index: 2;
+  padding: 2rem;
+  color: white;
+  max-width: 900px;
+}
+
+.hero h2 {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  font-family: var(--font-serif);
+  color: white;
+}
+
+.hero p {
+  font-size: 1.3rem;
+  line-height: 1.8;
+  max-width: 800px;
+  margin: 0 auto;
+  color: white;
+}
+
+.slider-dots {
+  position: absolute;
+  bottom: 2rem;
+  display: flex;
+  gap: 0.7rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.4;
+  cursor: pointer;
+}
+
+.dot.active {
+  opacity: 1;
+}
+
+/* Form Styling */
+.lead-form-container {
+  width: 100%;
+  max-width: 450px;
+  padding: 3rem;
+  margin: 2rem auto 0 auto;
+  /* Centering the form */
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--primary);
+}
+
+.form-group input {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  font-family: inherit;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 1.2rem;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.btn-submit:hover {
+  background-color: var(--secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(63, 154, 174, 0.2);
+}
+
+/* Services Grid */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 3rem;
+  margin-top: 4rem;
+}
+
+.service-card {
+  position: relative;
+  border-radius: 20px;
+  overflow: visible;
+  /* Changed from hidden to allow 3D pop out */
+  height: 500px;
+  cursor: pointer;
+}
+
+.service-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  /* Add radius here since overflow is visible on parent */
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  /* Add shadow to floating image */
+}
+
+.service-card:hover .service-image {
+  transform: scale(1.05);
+}
+
+.service-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2.5rem;
+  color: white;
+}
+
+.service-overlay h3 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.service-overlay p {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+/* Process Section */
+.process-steps {
+  display: flex;
+  justify-content: space-between;
+  gap: 4rem;
+  margin-top: 4rem;
+  flex-wrap: wrap;
+}
+
+.step {
+  flex: 1;
+  min-width: 250px;
+  text-align: center;
+}
+
+.step-number {
+  font-family: var(--font-serif);
+  font-size: 4rem;
+  color: rgba(63, 154, 174, 0.1);
+  margin-bottom: -2rem;
+}
+
+.step h3 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+/* Base Animations */
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+
+
+/* Sections */
+.section {
+  padding: var(--section-padding);
+}
+
+.section-title {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 3rem;
+  color: var(--primary);
+}
+
+.accent-text {
+  color: var(--primary);
+  font-style: italic;
+}
+
+/* Owners Section */
+.owners-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.owner-card {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.owner-card.right {
+  flex-direction: row-reverse;
+  /* Alternate layout */
+}
+
+.owner-image-wrapper {
+  flex: 1;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  /* Removed overflow: hidden so image can pop out */
+}
+
+.owner-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 20px;
+  transition: transform 0.5s ease;
+}
+
+.owner-img:hover {
+  transform: scale(1.03);
+}
+
+.owner-info {
+  flex: 1;
+  padding: 2.5rem;
+  z-index: 1;
+  transform-style: preserve-3d;
+  /* Ensure children can pop out */
+}
+
+.owner-info h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--secondary);
+}
+
+.owner-info p {
+  font-size: 1.1rem;
+  color: #555;
+  font-family: var(--font-serif);
+  /* Use Sans for readability in body blocks */
+}
+
+/* Responsive adjustments for owners */
+@media (max-width: 768px) {
+
+  .owner-card,
+  .owner-card.right {
+    flex-direction: column;
+  }
+
+  .owner-info {
+    padding: 1.5rem;
+    width: 100%;
+  }
+}
+
+/* Modal/Lightbox Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-content {
+  background: white;
+  margin: auto;
+  padding: 0;
+  width: 90%;
+  max-width: 900px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+}
+
+.close-modal {
+  color: #aaa;
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+  transition: color 0.3s;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+  color: var(--primary);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: row;
+}
+
+.modal-image {
+  width: 50%;
+  object-fit: cover;
+  min-height: 400px;
+}
+
+.modal-text {
+  padding: 3rem;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.modal-text h3 {
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+}
+
+.modal-text p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #555;
+  font-family: var(--font-serif);
+}
+
+@media (max-width: 768px) {
+  .modal-body {
+    flex-direction: column;
+  }
+
+  .modal-image,
+  .modal-text {
+    width: 100%;
+  }
+
+  .modal-image {
+    height: 250px;
+    min-height: auto;
+  }
+
+  /* Ensure text is left-aligned on mobile too */
+}
+
+/* Social Media Icons */
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-bottom: 2rem;
+}
+
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* remove background and fixed sizing */
+  color: var(--secondary);
+  /* Darker teal/blue as requested */
+  text-decoration: none;
+  font-size: 2rem;
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  transform: translateY(-3px);
+  color: var(--primary);
+  box-shadow: none;
+}
+
+/* Process Step Numbers */
+.step-number {
+  font-size: 6rem;
+  font-family: var(--font-serif);
+  color: rgba(63, 154, 174, 0.2);
+  /* Make this darker if needed, currently light */
+  /* User requested darker, so let's update it */
+  color: rgba(44, 110, 125, 0.3);
+  /* Darker teal transparent */
+  line-height: 1;
+  margin-bottom: -2rem;
+  position: relative;
+  z-index: -1;
+}
+
+/* WhatsApp Float */
+.whatsapp-float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 40px;
+  right: 40px;
+  background-color: #25d366;
+  color: #FFF;
+  border-radius: 50px;
+  text-align: center;
+  font-size: 30px;
+  box-shadow: 2px 2px 3px #999;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.whatsapp-float:hover {
+  background-color: #128C7E;
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .whatsapp-float {
+    width: 50px;
+    height: 50px;
+    bottom: 20px;
+    right: 20px;
+    font-size: 25px;
+  }
+}

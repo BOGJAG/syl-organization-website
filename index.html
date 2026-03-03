@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYL Organization | Elevate Your Space</title>
+    <meta name="description"
+        content="Professional home organization services in South Florida. Simplifying your life through efficient space optimization and harmony.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Great+Vibes&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Three.js for 3D Background -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- GSAP for smooth animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <link rel="stylesheet" href="style.css?v=8">
+</head>
+
+<body>
+    <!-- 3D Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <header>
+        <div class="logo-box">
+            <a href="#home">
+                <img src="images/syl_original_logo.png" alt="SYL Organization Logo" class="logo-img">
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#why-us">Why With Us?</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#team">Our Team</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <!-- New Slider Container -->
+        <div class="hero-slider">
+            <div class="slide" style="background-image: url('images/syl_hero_background_blend_1767927925521.png')">
+            </div>
+            <div class="slide" style="background-image: url('images/syl_hero_living_room_wide_1767928364881.png')">
+            </div>
+            <div class="slide" style="background-image: url('images/syl_hero_kitchen_airy_1767928380621.png')"></div>
+            <div class="slide" style="background-image: url('images/syl_hero_zen_corner_1767928394362.png')"></div>
+        </div>
+
+        <div class="hero-content">
+            <h2>Our Mission</h2>
+            <p>We believe that order at home leads to a calmer and more productive life. That’s why we are committed to
+                helping you regain control and enjoy a well-organized and harmonious home.</p>
+        </div>
+        <div class="slider-dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+    </section>
+
+
+
+    <!-- Services First as requested -->
+    <section class="section container" id="services">
+        <h2 class="section-title">Our Services</h2>
+        <div class="services-grid">
+            <div class="service-card glass tilt-card">
+                <img src="images/syl_closet_v2.png" alt="Luxury Closet Organization" class="service-image">
+                <div class="service-overlay">
+                    <h3>Closet Design</h3>
+                    <p>Tailored systems for your wardrobe and accessories.</p>
+                </div>
+            </div>
+            <div class="service-card glass tilt-card">
+                <img src="images/syl_pantry_v2.png" alt="Pantry Organization" class="service-image">
+                <div class="service-overlay">
+                    <h3>Pantry & Kitchen</h3>
+                    <p>Function meets aesthetic in the heart of your home.</p>
+                </div>
+            </div>
+            <div class="service-card glass tilt-card">
+                <img src="images/syl_office_v2.png" alt="Home Office Organization" class="service-image">
+                <div class="service-overlay">
+                    <h3>Workspaces</h3>
+                    <p>Optimize for productivity and focus.</p>
+                </div>
+            </div>
+            <div class="service-card glass tilt-card">
+                <img src="images/syl_laundry_v2.png" alt="Laundry & Utility room" class="service-image">
+                <div class="service-overlay">
+                    <h3>Utility Rooms</h3>
+                    <p>Elevating the functional areas of your life.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background-color: white;">
+        <div class="container">
+            <h2 class="section-title" id="why-us">Why With Us?</h2>
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <h3>Consultation</h3>
+                    <p>We analyze your space and understand your lifestyle needs.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <h3>Planning</h3>
+                    <p>A custom design strategy tailored to your aesthetic and budget.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <h3>Transformation</h3>
+                    <p>We implement the systems and teach you how to maintain them.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section container" id="gallery" style="text-align: center; padding: 4rem 2rem;">
+        <h2 class="section-title">Gallery</h2>
+        <p>Explore our recent transformations.</p>
+        <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 2rem;">
+            <img class="gallery-img tilt-card" src="images/gallery_closet_new.png" alt="Luxury Closet Organization"
+                style="width: 100%; border-radius: 8px; height: 200px; object-fit: cover; cursor: pointer;">
+            <img class="gallery-img tilt-card" src="images/gallery_pantry_new.png" alt="Kitchen Pantry Organization"
+                style="width: 100%; border-radius: 8px; height: 200px; object-fit: cover; cursor: pointer;">
+            <img class="gallery-img tilt-card" src="images/gallery_office_new.png" alt="Home Office Workspace"
+                style="width: 100%; border-radius: 8px; height: 200px; object-fit: cover; cursor: pointer;">
+            <img class="gallery-img tilt-card" src="images/gallery_laundry_new.png" alt="Laundry & Utility Room"
+                style="width: 100%; border-radius: 8px; height: 200px; object-fit: cover; cursor: pointer;">
+        </div>
+    </section>
+
+    <section class="section" id="contact" style="background-color: var(--primary); color: white;">
+        <div class="container" style="display: flex; flex-direction: column; align-items: center;">
+            <h2 class="section-title" style="color: white; margin-bottom: 1rem;">Start Your Journey</h2>
+            <p style="margin-bottom: 3rem; text-align: center; max-width: 600px;">Experience the calming power of
+                professional organization.</p>
+
+            <div class="lead-form-container glass"
+                style="margin: 0; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3);">
+                <form id="leadForm">
+                    <div class="form-group">
+                        <label for="name" style="color: white;">Name</label>
+                        <input type="text" id="name" name="name" placeholder="Your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" style="color: white;">Email</label>
+                        <input type="email" id="email" name="email" placeholder="hello@company.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" style="color: white;">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+1 (555) 000-0000" required>
+                    </div>
+                    <button type="submit" class="btn-submit" style="background-color: white; color: var(--primary);">Get
+                        Started</button>
+                    <div id="formStatus" style="margin-top: 1rem; font-size: 0.9rem; text-align: center; color: white;">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="section container" id="team">
+        <h2 class="section-title">Meet the Experts</h2>
+        <div class="owners-grid" style="justify-content: center;">
+            <div class="owner-card" style="max-width: 600px;">
+                <div class="owner-info glass tilt-card">
+                    <div class="owner-image-wrapper">
+                        <img src="images/johanna_profile_white_bg_1767931842951.png"
+                            alt="Johanna Chividatte - CEO & Founder" class="owner-img">
+                    </div>
+                    <div>
+                        <h3>Johanna Chividatte</h3>
+                        <p class="accent-text" style="font-size: 1rem; margin-bottom: 1rem; font-weight: 500;">CEO &
+                            Founder</p>
+                        <p>I believe in doing the work myself. Every fold, every label, and every system is implemented
+                            with my personal touch and attention to detail. Your home is unique, and so are your needs—I
+                            take the time to understand your lifestyle to create systems that truly work for you.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="owner-card right" style="max-width: 600px;">
+                <div class="owner-info glass tilt-card">
+                    <div class="owner-image-wrapper">
+                        <img src="images/jacqueline_profile_final.png" alt="Jacqueline Blondel - Organizer"
+                            class="owner-img">
+                    </div>
+                    <div>
+                        <h3>Jacqueline Blondel</h3>
+                        <p class="accent-text" style="font-size: 1rem; margin-bottom: 1rem; font-weight: 500;">Organizer
+                        </p>
+                        <p>Creating functional harmony is my passion. I work closely with you to maximize space,
+                            optimize
+                            storage, and create an environment that fosters calmness and mental clarity. Together, we
+                            can
+                            transform your cherished spaces to redefine your personal style.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <footer style="padding: 4rem 2rem; text-align: center; border-top: 1px solid rgba(0,0,0,0.05);">
+        <div class="social-links">
+            <a href="https://www.instagram.com/sylorganization/" class="social-icon" target="_blank"><i
+                    class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+            <a href="https://wa.me/13054326200" class="social-icon" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        </div>
+
+        <!-- WhatsApp Float -->
+        <a href="https://wa.me/13054326200" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <p>&copy; 2026 SYL Organization. Organizing Services.</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">+1 305 4326200 | info@sylorganization.com</p>
+    </footer>
+
+    <!-- Lightbox/Modal for Services -->
+    <!-- Lightbox/Modal for Services -->
+    <div id="serviceModal" class="modal">
+        <div class="modal-content glass">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body">
+                <img id="modalImage" src="" alt="Service Detail" class="modal-image">
+                <div id="modalGallery"
+                    style="display: none; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; width: 100%; margin-bottom: 2rem;">
+                </div>
+                <div class="modal-text">
+                    <h3 id="modalTitle"></h3>
+                    <p id="modalDescription"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fullscreen Image Viewer -->
+    <div id="fullscreenViewer" class="modal" style="z-index: 3000;">
+        <span class="close-viewer"
+            style="position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; z-index: 3001;">&times;</span>
+        <img id="fullscreenImg" src=""
+            style="max-width: 90%; max-height: 90%; margin: auto; display: block; border-radius: 8px;">
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
