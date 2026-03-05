@@ -701,3 +701,141 @@ nav a:hover {
     font-size: 25px;
   }
 }
+
+/* ═══════════════════════════════════════════════
+   HAMBURGER BUTTON (hidden on desktop)
+═══════════════════════════════════════════════ */
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem;
+  z-index: 1001;
+  flex-shrink: 0;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: white;
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ═══════════════════════════════════════════════
+   MOBILE — 768px and below
+═══════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  /* Header */
+  header {
+    height: 70px;
+    padding: 0 1.25rem;
+  }
+
+  .logo-img { height: 50px; }
+
+  /* Show hamburger, hide nav by default */
+  .hamburger { display: flex; }
+
+  nav {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background-color: var(--primary);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    z-index: 998;
+  }
+
+  nav.open { max-height: 400px; }
+
+  nav ul {
+    flex-direction: column;
+    gap: 0;
+    padding: 0.5rem 0 1rem;
+  }
+
+  nav ul li a {
+    display: block;
+    padding: 0.9rem 2rem;
+    font-size: 1.1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Hero */
+  .hero { height: 80vh; }
+
+  .hero-content {
+    padding: 1rem 1.25rem;
+    max-width: 100%;
+  }
+
+  .hero h2 {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .hero p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  /* Section titles */
+  .section-title { font-size: 1.9rem; }
+
+  /* Services */
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .service-card { height: 300px; }
+
+  /* Process steps */
+  .process-steps {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .step {
+    min-width: unset;
+    width: 100%;
+    max-width: 340px;
+  }
+
+  /* Contact form */
+  .lead-form-container { padding: 1.75rem 1.25rem; }
+
+  /* Gallery grid — 2 cols on mobile */
+  .gallery-grid-mobile {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Footer */
+  .social-links { gap: 1.5rem; }
+}
+
+/* ═══════════════════════════════════════════════
+   MOBILE — 480px and below (small phones)
+═══════════════════════════════════════════════ */
+
+@media (max-width: 480px) {
+  .hero h2 { font-size: 1.7rem; }
+  .section-title { font-size: 1.6rem; }
+  .hero p { font-size: 0.9rem; }
+}

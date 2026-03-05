@@ -21,7 +21,7 @@
     <!-- GSAP for smooth animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
-    <link rel="stylesheet" href="style.css?v=8">
+    <link rel="stylesheet" href="style.css?v=9">
 </head>
 
 <body>
@@ -34,7 +34,7 @@
                 <img src="images/syl_original_logo.png" alt="SYL Organization Logo" class="logo-img">
             </a>
         </div>
-        <nav>
+        <nav id="main-nav">
             <ul>
                 <li><a href="#home">Home</a></li>
                 <li><a href="#why-us">Why With Us?</a></li>
@@ -44,6 +44,11 @@
                 <li><a href="#contact">Contact Us</a></li>
             </ul>
         </nav>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </header>
 
     <section class="hero" id="home">

@@ -1,6 +1,25 @@
 // Local Node.js API endpoint
 const API_URL = '/api/leads';
 
+// Mobile hamburger menu
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('main-nav');
+
+if (hamburger && mobileNav) {
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        mobileNav.classList.toggle('open');
+    });
+
+    // Close menu when a nav link is tapped
+    mobileNav.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+            hamburger.classList.remove('open');
+            mobileNav.classList.remove('open');
+        });
+    });
+}
+
 document.getElementById('leadForm').addEventListener('submit', async function (e) {
     e.preventDefault();
 

@@ -1,34 +1,23 @@
-import express from 'express';
-import serverless from 'serverless-http';
-import cors from 'cors';
 import { google } from 'googleapis';
-import path from 'path';
-import { fileURLToPath } from 'url';
 import { readFileSync, existsSync } from 'fs';
-import dotenv from 'dotenv';
+import { join } from 'path';
 
-dotenv.config();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const app = express();
-const router = express.Router();
 const SPREADSHEET_ID = process.env.SPREADSHEET_ID;
 const SHEET_NAME = 'Sheet1';
 
 function getSheetsClient() {
     let credentials;
-    // Check if credentials are provided via Netlify Environment Variables
+
+    // Vercel: credentials stored as JSON string in env var
     if (process.env.GOOGLE_CREDENTIALS) {
         credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS);
     } else {
-        // Fallback for local development using the local JSON file
-        const CREDS_FILE = path.join(__dirname, '../../credentials.json');
-        if (!existsSync(CREDS_FILE)) {
-            throw new Error('credentials.json not found and GOOGLE_CREDENTIALS env var not set.');
+        // Local dev: read from file
+        const credsFile = join(process.cwd(), 'credentials.json');
+        if (!existsSync(credsFile)) {
+            throw new Error('No credentials found. Set GOOGLE_CREDENTIALS env var or add credentials.json.');
         }
-        credentials = JSON.parse(readFileSync(CREDS_FILE, 'utf8'));
+        credentials = JSON.parse(readFileSync(credsFile, 'utf8'));
     }
 
     const auth = new google.auth.GoogleAuth({
@@ -53,18 +42,24 @@ async function ensureHeaderRow(sheets) {
     }
 }
 
-app.use(cors());
-app.use(express.json());
+export default async function handler(req, res) {
+    // CORS headers
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-// Handle the POST request to /leads
-router.post('/leads', async (req, res) => {
+    if (req.method === 'OPTIONS') return res.status(200).end();
+    if (req.method !== 'POST') {
+        return res.status(405).json({ success: false, message: 'Method not allowed.' });
+    }
+
     const { name, email, phone, timestamp } = req.body;
 
     if (!name || !email || !phone) {
         return res.status(400).json({ success: false, message: 'Missing required fields.' });
     }
     if (!SPREADSHEET_ID) {
-        return res.status(500).json({ success: false, message: 'SPREADSHEET_ID not set in environment' });
+        return res.status(500).json({ success: false, message: 'SPREADSHEET_ID not configured.' });
     }
 
     try {
@@ -82,17 +77,10 @@ router.post('/leads', async (req, res) => {
         });
 
         console.log(`[Lead] ${name} | ${email} | ${phone}`);
-        res.json({ success: true, message: 'Lead recorded successfully!' });
+        return res.status(200).json({ success: true });
 
     } catch (err) {
         console.error('[Sheets error]', err.message);
-        res.status(500).json({ success: false, message: 'Failed to save lead.' });
+        return res.status(500).json({ success: false, message: 'Failed to save lead.' });
     }
-});
-
-// Netlify rewrite rules means the path could be /api/leads or /.netlify/functions/api/leads
-app.use('/api', router);
-app.use('/.netlify/functions/api', router);
-
-// Export the serverless handler
-export const handler = serverless(app);
+}
