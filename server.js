@@ -47,21 +47,26 @@ async function ensureHeaderRow(sheets) {
 
 // ─── Middleware ───────────────────────────────────────────────────────────────
 
-app.use(cors());
-app.use(express.json());
+app.use(cors({ origin: process.env.ALLOWED_ORIGIN || 'http://localhost:3000', methods: ['POST'] }));
+app.use(express.json({ limit: '10kb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ─── Routes ───────────────────────────────────────────────────────────────────
 
 app.post('/api/leads', async (req, res) => {
-    const { name, email, phone, timestamp } = req.body;
+    const { name, email, phone } = req.body;
 
     if (!name || !email || !phone) {
         return res.status(400).json({ success: false, message: 'Missing required fields.' });
     }
+    if (name.length > 100 || email.length > 200 || phone.length > 30) {
+        return res.status(400).json({ success: false, message: 'Input exceeds allowed length.' });
+    }
     if (!SPREADSHEET_ID) {
         return res.status(500).json({ success: false, message: 'SPREADSHEET_ID not set in .env' });
     }
+
+    const timestamp = new Date().toISOString();
 
     try {
         const sheets = getSheetsClient();
@@ -70,10 +75,10 @@ app.post('/api/leads', async (req, res) => {
         await sheets.spreadsheets.values.append({
             spreadsheetId: SPREADSHEET_ID,
             range: `${SHEET_NAME}!A:D`,
-            valueInputOption: 'USER_ENTERED',
+            valueInputOption: 'RAW',
             insertDataOption: 'INSERT_ROWS',
             requestBody: {
-                values: [[timestamp || new Date().toISOString(), name, email, phone]],
+                values: [[timestamp, name, email, phone]],
             },
         });
 

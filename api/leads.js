@@ -4,6 +4,12 @@ import { join } from 'path';
 
 const SPREADSHEET_ID = process.env.SPREADSHEET_ID;
 const SHEET_NAME = 'Sheet1';
+const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || 'https://sylorgmd.vercel.app';
+
+// Input length limits
+const MAX_NAME = 100;
+const MAX_EMAIL = 200;
+const MAX_PHONE = 30;
 
 function getSheetsClient() {
     let credentials;
@@ -43,8 +49,8 @@ async function ensureHeaderRow(sheets) {
 }
 
 export default async function handler(req, res) {
-    // CORS headers
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    // CORS — only allow requests from our own domain
+    res.setHeader('Access-Control-Allow-Origin', ALLOWED_ORIGIN);
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
@@ -53,14 +59,21 @@ export default async function handler(req, res) {
         return res.status(405).json({ success: false, message: 'Method not allowed.' });
     }
 
-    const { name, email, phone, timestamp } = req.body;
+    const { name, email, phone } = req.body;
 
+    // Validate presence and length — never trust client-supplied timestamp
     if (!name || !email || !phone) {
         return res.status(400).json({ success: false, message: 'Missing required fields.' });
+    }
+    if (name.length > MAX_NAME || email.length > MAX_EMAIL || phone.length > MAX_PHONE) {
+        return res.status(400).json({ success: false, message: 'Input exceeds allowed length.' });
     }
     if (!SPREADSHEET_ID) {
         return res.status(500).json({ success: false, message: 'SPREADSHEET_ID not configured.' });
     }
+
+    // Always generate timestamp server-side
+    const timestamp = new Date().toISOString();
 
     try {
         const sheets = getSheetsClient();
@@ -69,10 +82,11 @@ export default async function handler(req, res) {
         await sheets.spreadsheets.values.append({
             spreadsheetId: SPREADSHEET_ID,
             range: `${SHEET_NAME}!A:D`,
-            valueInputOption: 'USER_ENTERED',
+            // RAW prevents formula injection (e.g. =HYPERLINK(...) in name field)
+            valueInputOption: 'RAW',
             insertDataOption: 'INSERT_ROWS',
             requestBody: {
-                values: [[timestamp || new Date().toISOString(), name, email, phone]],
+                values: [[timestamp, name, email, phone]],
             },
         });
 
