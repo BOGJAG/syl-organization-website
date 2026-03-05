@@ -13,7 +13,7 @@ const __dirname = path.dirname(__filename); // Updated __dirname polyfill
 const app = express();
 const PORT = process.env.PORT || 3000;
 const SPREADSHEET_ID = process.env.SPREADSHEET_ID;
-const SHEET_NAME = 'Leads';
+const SHEET_NAME = 'Sheet1';
 const CREDS_FILE = path.join(__dirname, 'credentials.json');
 
 // ─── Google Sheets client ─────────────────────────────────────────────────────
