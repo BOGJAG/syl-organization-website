@@ -179,7 +179,7 @@ document.querySelectorAll('.gallery-img').forEach(img => {
             images = [
                 'images/gallery_closet_new.png',
                 'images/closet_multi_1.png',
-                'images/closet_design_modal_1767931282928.png',
+                'images/closet_multi_new_1772670716178.png',
                 'images/syl_luxury_closet_4k_1767926338314.png',
                 'images/closet_multi_5_1772581184410.png',
                 'images/closet_multi_6_1772581201712.png'
