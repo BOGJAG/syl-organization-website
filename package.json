@@ -3,18 +3,34 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npx trigger.dev@latest dev",
-    "deploy": "npx trigger.dev@latest deploy",
+    "start": "node server.js",
+    "dev": "node --watch server.js",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.32.1",
     "@trigger.dev/sdk": "^4.3.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
     "googleapis": "^144.0.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^22.10.1",
     "typescript": "^5.7.2"
-  }
+  },
+  "description": "",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BOGJAG/syl-organization-website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BOGJAG/syl-organization-website/issues"
+  },
+  "homepage": "https://github.com/BOGJAG/syl-organization-website#readme"
 }

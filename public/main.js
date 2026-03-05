@@ -1,10 +1,12 @@
+// Local Node.js API endpoint
+const API_URL = '/api/leads';
+
 document.getElementById('leadForm').addEventListener('submit', async function (e) {
     e.preventDefault();
 
     const status = document.getElementById('formStatus');
     const submitBtn = e.target.querySelector('.btn-submit');
 
-    // Gather data
     const formData = new FormData(this);
     const data = {
         name: formData.get('name'),
@@ -13,24 +15,26 @@ document.getElementById('leadForm').addEventListener('submit', async function (e
         timestamp: new Date().toISOString()
     };
 
-    // UI Feedback
     submitBtn.disabled = true;
     submitBtn.textContent = 'Processing...';
-    status.textContent = 'Optimizing your request...';
-    status.style.color = 'var(--primary)';
+    status.textContent = '';
 
     try {
-        // Mocking a backend system call
-        console.log('SYL System: Capturing Lead Data...', data);
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
 
-        // In a real scenario, this would be a fetch() call to a server
-        // We simulate a small delay
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        const result = await response.json();
 
-        status.textContent = 'Thank you! We will reach out to you shortly.';
-        status.style.color = '#28a745';
-        e.target.reset();
-
+        if (response.ok && result.success) {
+            status.textContent = 'Thank you! We will reach out to you shortly.';
+            status.style.color = '#28a745';
+            e.target.reset();
+        } else {
+            throw new Error(result.message || 'Server error');
+        }
     } catch (error) {
         status.textContent = 'Something went wrong. Please try again.';
         status.style.color = '#dc3545';
