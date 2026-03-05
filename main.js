@@ -188,7 +188,7 @@ document.querySelectorAll('.gallery-img').forEach(img => {
             images = [
                 'images/pantry_multi_1_1772580243334.png',
                 'images/pantry_multi_2_1772580256273.png',
-                'images/pantry_multi_3_1772580267982.png',
+                'images/pantry_multi_3_new_1772674089939.png',
                 'images/pantry_multi_4_1772580284440.png',
                 'images/pantry_multi_5_1772581216092.png',
                 'images/pantry_multi_6_1772581233841.png'
@@ -206,7 +206,7 @@ document.querySelectorAll('.gallery-img').forEach(img => {
             images = [
                 'images/laundry_multi_1_1772580580944.png',
                 'images/laundry_multi_2_1772580593747.png',
-                'images/laundry_multi_3_1772580611860.png',
+                'images/laundry_multi_3_new_1772674105542.png',
                 'images/laundry_multi_4_1772580628799.png',
                 'images/laundry_multi_5_1772669403757.png',
                 'images/laundry_multi_6_1772669414229.png'
