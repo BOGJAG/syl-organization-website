@@ -206,7 +206,7 @@ document.querySelectorAll('.gallery-img').forEach(img => {
             images = [
                 'images/laundry_multi_1_1772580580944.png',
                 'images/laundry_multi_2_1772580593747.png',
-                'images/laundry_multi_3_new_1772674105542.png',
+                'images/laundry_multi_3_1772580611860.png',
                 'images/laundry_multi_4_1772580628799.png',
                 'images/laundry_multi_5_1772669403757.png',
                 'images/laundry_multi_6_1772669414229.png'
