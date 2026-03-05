@@ -1,0 +1,9 @@
+node_modules
+.env
+credentials.json
+.tmp
+*.py
+generate_missing.py
+push_images.sh
+requirements.txt
+server.js
